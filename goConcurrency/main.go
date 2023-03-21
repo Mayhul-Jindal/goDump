@@ -1,139 +1,106 @@
 package main
 
+
+
+
+// yeh pattern 1 hain but meine vese thodha toh chudap likha hain yaha but samajh toh aa gaya tha jab likha tha
+// yeh wait group wali cheez tabh kaam ari jab tum for loop mein chalare verna toh buffered use karke hack kar sakte
 // import (
 // 	"fmt"
+// 	"time"
 // )
 
-// type Msg struct{
-// 	From string
-// 	Payload string
+// type testObject struct{
+// 	Id int
+// 	Name string
+// 	Recommendations []string
+// 	Likes int
 // }
 
-// type Server struct{
-// 	msgch chan Msg
-// }
-
-// func (s *Server) listen(){
-// 	for{
-// 		msg := <-s.msgch
-// 		fmt.Printf("From: %s\nPayload: %s\n", msg.From, msg.Payload)
-// 	}
+// var database = []testObject{
+// 	{
+// 		Id: 1,
+// 		Name: "mayhul jindal",
+// 		Recommendations: []string{"anthingg", "kunal"},
+// 		Likes: 20,
+// 	},
+// 	{
+// 		Id: 2,
+// 		Name: "rohan verma",
+// 		Recommendations: []string{"coco melon", "code with harry"},
+// 		Likes: 1,
+// 	},
+// 	{
+// 		Id: 3,
+// 		Name: "prerit rana",
+// 		Recommendations: []string{"andrej katharpy", "ml ka chodha hun mein"},
+// 		Likes: 200,
+// 	},
 // }
 
 // func main(){
-// 	s := &Server{
-// 		msgch: make(chan Msg),
-// 	}
+// 	now := time.Now()
 
-// 	go s.listen()
-// 	sendMessageToServer(Msg{From: "mayhul", Payload: "hello world"}, s.msgch)
-	
-// 	for{
+// 	chanP := make(chan string, 2)
+// 	chanR := make(chan []string, 3)
+// 	chanL := make(chan int, 4)
 
-// 	}
+// 	go fetchUserName(1, chanP)
+// 	go fetchUserRecommendationData(1, chanR)
+// 	go fetchUserLikesData(1, chanL)
+
+//     var p string
+//     var r []string
+//     var l int
+
+// 	p = <-chanP
+// 	r = <-chanR
+// 	l = <-chanL
+
+// 	fmt.Println(p)
+// 	fmt.Println(r)
+// 	fmt.Println(l)
+
+// 	fmt.Println(time.Since(now))
+
 // }
 
-// func sendMessageToServer(message Msg, msgch chan Msg){
-// 	msgch <- message
+// func fetchUserName(Id int, chanP chan string){
+// 	time.Sleep(1000 * time.Millisecond)
+
+// 	for _, person := range database{
+// 		if person.Id == Id{
+// 			chanP <- person.Name
+// 			return
+// 		}
+// 	}
+
+// 	chanP <- ""
 // }
 
+// func fetchUserRecommendationData(Id int, chanR chan []string){ // weakest link
+// 	time.Sleep(100 * time.Millisecond)
 
-import (
-	"fmt"
-	"time"
-)
+// 	for _, person := range database{
+// 		if person.Id == Id{
+// 			chanR <- person.Recommendations
+// 			return
+// 		}
+// 	}
 
-type testObject struct{
-	Id int
-	Name string
-	Recommendations []string
-	Likes int
-}
+// 	chanR <- []string{}
+// }
 
-var database = []testObject{
-	{
-		Id: 1,
-		Name: "mayhul jindal",
-		Recommendations: []string{"anthingg", "kunal"},
-		Likes: 20,
-	},
-	{
-		Id: 2,
-		Name: "rohan verma",
-		Recommendations: []string{"coco melon", "code with harry"},
-		Likes: 1,
-	},
-	{
-		Id: 3,
-		Name: "prerit rana",
-		Recommendations: []string{"andrej katharpy", "ml ka chodha hun mein"},
-		Likes: 200,
-	},
-}
+// func fetchUserLikesData(Id int, chanL chan int){
+// 	time.Sleep(100 * time.Millisecond)
 
-func main(){
-	now := time.Now()
+// 	for _, person := range database{
+// 		if person.Id == Id{
+// 			chanL <- person.Likes
+// 			return
+// 		}
+// 	}
 
-	chanP := make(chan string, 2)
-	chanR := make(chan []string, 3)
-	chanL := make(chan int, 4)
-
-	go fetchUserName(1, chanP)
-	go fetchUserRecommendationData(1, chanR)
-	go fetchUserLikesData(1, chanL)
-
-    var p string
-    var r []string
-    var l int
-
-	p = <-chanP
-	r = <-chanR
-	l = <-chanL
-
-	fmt.Println(p)
-	fmt.Println(r)
-	fmt.Println(l)
-
-	fmt.Println(time.Since(now))
-
-}
-
-func fetchUserName(Id int, chanP chan string){
-	time.Sleep(1000 * time.Millisecond)
-
-	for _, person := range database{
-		if person.Id == Id{
-			chanP <- person.Name
-			return
-		}
-	}
-
-	chanP <- ""
-}
-
-func fetchUserRecommendationData(Id int, chanR chan []string){ // weakest link
-	time.Sleep(100 * time.Millisecond)
-
-	for _, person := range database{
-		if person.Id == Id{
-			chanR <- person.Recommendations
-			return
-		}
-	}
-
-	chanR <- []string{}
-}
-
-func fetchUserLikesData(Id int, chanL chan int){
-	time.Sleep(100 * time.Millisecond)
-
-	for _, person := range database{
-		if person.Id == Id{
-			chanL <- person.Likes
-			return
-		}
-	}
-
-	chanL <- 0
-}
+// 	chanL <- 0
+// }
 
