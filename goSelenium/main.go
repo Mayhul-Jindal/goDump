@@ -1,3 +1,5 @@
+//! make a cli out of this + golang testing benchmarking dekhna hain. Yeh kal taq toh ho jana chahiye
+
 package main
 
 import (
@@ -7,8 +9,6 @@ import (
 	"github.com/tebeka/selenium"
 	"github.com/tebeka/selenium/chrome"
 )
-
-
 
 func main(){
     // setting up capabilities
@@ -36,7 +36,7 @@ func main(){
     if err != nil {
         panic(err)
     }
-
+    
     // Grab the title of the results page and print it
     title, err := wd.Title()
     if err != nil {
