@@ -1,50 +1,44 @@
-version: "1.0"
+version: "3.0"
 
 services:
 
   zookeeper-1:
-    container_name: zookeeper-1
     image: lambda/zookeeper:2.7.0
     build:
       context: ./zookeeper-docker
     volumes:
-    - ./config/zookeeper-1/zookeeper.properties:/kafka/config/zookeeper.properties
+    - ./kafka-docker/config/zookeeper-1/zookeeper.properties:/kafka/config/zookeeper.properties
     - ./data/zookeeper-1/:/tmp/zookeeper/
-    networks:
-    - kafka-net
 
   kafka-1:
-    container_name: kafka-1
+    depends_on:
+      - zookeeper-1
     image: lambda/kafka:2.7.0
     build: 
-      context: .
+      context: ./kafka-docker
     volumes:
-    - ./config/kafka-1/server.properties:/kafka/config/server.properties
+    - ./kafka-docker/config/kafka-1/server.properties:/kafka/config/server.properties
     - ./data/kafka-1/:/tmp/kafka-logs/
-    networks:
-    - kafka-net
 
   kafka-2:
-    container_name: kafka-2
+    depends_on:
+      - zookeeper-1
     image: lambda/kafka:2.7.0
     build: 
-      context: .
+      context: ./kafka-docker
     volumes:
-    - ./config/kafka-2/server.properties:/kafka/config/server.properties
+    - ./kafka-docker/config/kafka-2/server.properties:/kafka/config/server.properties
     - ./data/kafka-2/:/tmp/kafka-logs/
-    networks:
-    - kafka-net
 
   kafka-3:
-    container_name: kafka-3
+    depends_on:
+      - zookeeper-1
     image: lambda/kafka:2.7.0
     build: 
-      context: .
+      context: ./kafka-docker
     volumes:
-    - ./config/kafka-3/server.properties:/kafka/config/server.properties
+    - ./kafka-docker/config/kafka-3/server.properties:/kafka/config/server.properties
     - ./data/kafka-3/:/tmp/kafka-logs/
-    networks:
-    - kafka-net
 
   # kafka-producer:
   #   container_name: kafka-producer
@@ -82,7 +76,3 @@ services:
   #   - "KAFKA_GROUP=orders"
   #   networks:
   #   - kafka-net
-
-networks: 
-  kafka-net:
-    name: kafka-net
